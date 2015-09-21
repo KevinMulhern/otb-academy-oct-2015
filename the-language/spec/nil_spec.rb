@@ -30,6 +30,13 @@ RSpec.describe "nil in Ruby" do
     expect( "string".nil? ).to eq(false)
     expect( Object.nil? ).to eq(false)
     expect( num.nil? ).to eq(false)
+      end
+
+  it "evealuating if different objects are nil" do
+    num = 1234
+    expect( "string".nil? ).to eq(false)
+    expect( Object.nil? ).to eq(false)
+    expect( num.nil? ).to eq(false)
   end
 
   it "is not the same as one" do
