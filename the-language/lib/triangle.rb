@@ -14,6 +14,10 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
+	sorted = [a,b,c].sort
+
+	raise TriangleError if a < 1
+	raise TriangleError unless sorted[0..1].inject(:+) > sorted.last
   if [a,b,c].uniq.length == 1
   	:equilateral
   elsif [a,b,c].uniq.length == 2
@@ -22,10 +26,15 @@ def triangle(a, b, c)
   	:scalene
   end
 end
-
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
 end
+
+
+
+
+
+
 
 
 
