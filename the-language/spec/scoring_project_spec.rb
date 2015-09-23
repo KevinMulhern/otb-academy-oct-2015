@@ -41,7 +41,10 @@ def score(dice)
         score += 1000
       end
     elsif key == 5
-      
+      return "ji"
+
+    end
+
       
 
   end
