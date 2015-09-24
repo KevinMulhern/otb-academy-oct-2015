@@ -30,6 +30,7 @@
 def score(dice)
   hash = Hash.new
   score = 0
+  return 0 if dice.empty?
   dice.each do |key|
     hash[key] = dice.count(key) if !hash.keys.include?(key)
   end
@@ -41,8 +42,9 @@ def score(dice)
         score += 1000
       end
     elsif key == 5
-      return "ji"
-
+        score += 50
+      else
+        score
     end
 
       
@@ -55,7 +57,7 @@ end
 
 
 
-score([1,1,1,2])
+puts score([1,1,1,2])
 
 # RSpec.describe "scorign a game of greed" do
 #   it "scores an empty list as 0" do
