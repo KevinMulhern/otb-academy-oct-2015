@@ -1,9 +1,19 @@
 # Implement a DiceSet Class here:
 #
-# class DiceSet
-#   code ...
-# end
-#
+ class DiceSet
+    attr_reader :values
+    def initialize
+
+    end
+   def roll(num)
+      @values = (1..num).to_a.sample(5)
+   end
+ end
+
+d = DiceSet.new
+puts "dice roll: #{d.roll(4)}"
+puts "dice values: #{d.values}"
+puts "dice valies"
 
 RSpec.describe "dice set" do
   it "can create a new sice set" do
@@ -35,6 +45,7 @@ RSpec.describe "dice set" do
 
     dice.roll(5)
     first_time = dice.values
+    puts "first roll #{first_time}"
 
     dice.roll(5)
     second_time = dice.values

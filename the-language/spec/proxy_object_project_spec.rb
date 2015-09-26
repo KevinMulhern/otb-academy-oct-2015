@@ -10,11 +10,29 @@
 # missing handler and any other supporting methods.
 
 class Proxy
+  attr_reader :messages
   def initialize(target_object)
     @object = target_object
-    # ADD MORE CODE HERE
+    @messages = []
   end
-  # WRITE CODE HERE
+
+  def respond_to?(method_name)
+    @object.respond_to?(method_name)
+  end
+
+  def number_of_times_called(method_name)
+    @messages.count(method_name)
+  end
+
+  def called?(method_name)
+    @messages.include?(method_name)
+  end
+
+  def method_missing(method_name, *args, &block)
+      @messages << method_name
+      @object.send(method_name, *args, &block)
+  end
+
 end
 
 RSpec.describe "the proxy object" do
@@ -22,16 +40,19 @@ RSpec.describe "the proxy object" do
     # NOTE: The Television class is defined below
     tv = Proxy.new(Television.new)
 
-    # HINT: Proxy class is defined above, may need tweaking...
+#     # HINT: Proxy class is defined above, may need tweaking...
 
     expect( tv ).to be_a( Proxy )
   end
 
   it "still operates the TV as expected" do
     tv = Proxy.new(Television.new)
+    puts tv.inspect
 
     tv.channel = 10
     tv.power
+
+    puts tv.inspect
 
     expect( tv.channel ).to eq( 10 )
     expect( tv ).to be_on
@@ -88,11 +109,11 @@ RSpec.describe "the proxy object" do
 end
 
 
-# ====================================================================
-# The following code is to support the testing of the Proxy class.  No
-# changes should be necessary to anything below this comment.
+# # ====================================================================
+# # The following code is to support the testing of the Proxy class.  No
+# # changes should be necessary to anything below this comment.
 
-# Example class using in the proxy testing above.
+# # Example class using in the proxy testing above.
 class Television
   attr_accessor :channel
 
@@ -109,7 +130,7 @@ class Television
   end
 end
 
-# Tests for the Television class.  All of theses tests should pass.
+# # Tests for the Television class.  All of theses tests should pass.
 RSpec.describe "a television" do
   it "turns on" do
     tv = Television.new
