@@ -2,19 +2,29 @@
 class Bottles
     def verse(num)
     	next_num = num -1
-     	if num >= 1
-            "#{bottles_left(num)} bottle#{plural_ending(num)} of beer on the wall, #{num} bottle#{plural_ending(num)} of beer.\nTake #{prenoun(num)} down and pass it around, #{bottles_left(next_num)} bottle#{plural_ending(next_num)} of beer on the wall.\n"
-    	else
-      		"#{bottles_left(num)} bottle#{plural_ending(num)} of beer on the wall, #{bottles_left(num)} bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
-    	end
+     	"#{bottles_left(num).capitalize} bottle#{plural_ending(num)} of beer on the wall, #{bottles_left(num)} bottle#{plural_ending(num)} of beer.\n#{bottles_verse_ending(num)}, #{bottles_left(next_num)} bottle#{plural_ending(next_num)} of beer on the wall.\n"
     end
+
+   def bottles_verse_ending(num)
+   	if num >= 1
+   		"Take #{prenoun(num)} down and pass it around"
+   	else
+   		"Go to the store and buy some more"
+   	end
+   end
 
     def prenoun(num)
     	num == 1 ? "it" : "one"
     end
 
     def bottles_left(num)
-    	num > 0 ? num : 'no more'
+    	if num > 0
+    		num.to_s
+    	elsif num == 0
+    		'no more'
+    	else
+    		'99'
+    	end
     end
 
     def plural_ending(number)
