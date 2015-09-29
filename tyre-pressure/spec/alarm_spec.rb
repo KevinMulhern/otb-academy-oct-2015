@@ -1,11 +1,14 @@
 require 'alarm'
 require 'sensor'
 RSpec.describe "tyre pressure alarm" do
-	subject { Alarm.new(sensor) }
+	subject { Alarm.new(sensor, notifier) }
 	let(:sensor) { double("sensor", :sample_pressure => 17.5) }
+  let(:notifier) { double("notifier") }
+
 
 	before do
-		subject.check
+    allow( notifier).to receive(:out_of_bounds)
+    subject.check
 	end
 	
   it "initialize's alarm class with sensor value" do
@@ -21,8 +24,14 @@ RSpec.describe "tyre pressure alarm" do
   	let(:sensor) { double("sensor", :sample_pressure => 17) }
 
   	it "checks low tyre pressure" do 
-  		expect( subject.on? ).to eq(true)
+      expect( subject ).to be_on
   	end
+
+    it "calls out of bounds on notifier" do
+        expect( notifier ).to receive(:out_of_bounds)
+        subject.check
+    end
+
   end
 
   context "high tyre pressure" do
