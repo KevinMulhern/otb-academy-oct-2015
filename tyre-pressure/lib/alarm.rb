@@ -2,7 +2,6 @@ class Alarm
   
   def initialize(sensor, notifier)
   	@sensor = sensor
-  	@on = false
     @notifier = notifier
   end
 
@@ -10,11 +9,7 @@ class Alarm
   	pressure = @sensor.sample_pressure
   	if pressure < 17.5 || pressure > 21
       @notifier.out_of_bounds
-      @on = true
   	end
-  end
-
-  def on?
-  	@on
+    @notifier.normal_range
   end
 end

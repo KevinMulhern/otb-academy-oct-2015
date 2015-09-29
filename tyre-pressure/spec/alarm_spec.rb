@@ -8,6 +8,7 @@ RSpec.describe "tyre pressure alarm" do
 
 	before do
     allow( notifier).to receive(:out_of_bounds)
+    allow( notifier).to receive(:normal_range)
     subject.check
 	end
 	
@@ -23,10 +24,6 @@ RSpec.describe "tyre pressure alarm" do
   context "low tyre pressure" do
   	let(:sensor) { double("sensor", :sample_pressure => 17) }
 
-  	it "checks low tyre pressure" do 
-      expect( subject ).to be_on
-  	end
-
     it "calls out of bounds on notifier" do
         expect( notifier ).to receive(:out_of_bounds)
         subject.check
@@ -38,7 +35,8 @@ RSpec.describe "tyre pressure alarm" do
     let(:sensor) { double("sensor", :sample_pressure => 22) }
 
     it "checks high tyre pressure" do
-      expect( subject.on? ).to eq(true)
+      expect( notifier ).to receive(:out_of_bounds)
+      subject.check
     end
   end
 
@@ -46,7 +44,8 @@ RSpec.describe "tyre pressure alarm" do
     let(:sensor) { double("sensor", :sample_pressure => 18) }
 
     it "checks false response for alarm when pressure in range" do 
-      expect( subject.on?).to eq(false)
+      expect( notifier ).to receive(:normal_range)
+      subject.check
     end
   end
 
